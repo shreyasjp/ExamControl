@@ -10,8 +10,9 @@ f.pop(0)
 print(f)
 
 for i in f:
-    print(i)
-    d.execute('select `'+i+'` from test.prn_sub where `'+i+'` is not null;')
+    print('\n',i,'\n')
+    z='select `'+i+'` from test.prn_sub where `'+i+'` is not null;'
+    d.execute(z)
     g=d.fetchall()
     for j in g:
         print(j[0])
