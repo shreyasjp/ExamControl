@@ -16,7 +16,6 @@ class RoomInfo:
 import mysql.connector as a
 b=a.connect(host='localhost', user='root', passwd='root')
 d=b.cursor(buffered=True)
-d.execute('SELECT * FROM test.rooms JOIN test.room_class_specs ON test.rooms.RoomClassID = test.room_class_specs.RoomClassID;')
 
 """ d.execute('select * from test.prn_sub;')
 e=d.column_names;
@@ -37,7 +36,8 @@ for i in f:
 d.execute('SELECT * FROM test.rooms JOIN test.room_class_specs ON test.rooms.RoomClassID = test.room_class_specs.RoomClassID;')
 rooms=[]
 for i in d.fetchall():
-    matrix=[[0] * i[8] for _ in range(i[7])]
+    matrix=[[0] * 2*i[7] for _ in range(i[8])]
     rooms.append(RoomInfo(i[0],i[1],i[5],i[6],0,i[8],i[7],matrix))
 
 print(rooms[0].RoomName)
+print(rooms[5].Matrix)
