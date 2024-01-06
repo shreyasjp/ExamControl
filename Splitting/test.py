@@ -77,8 +77,22 @@ for i in rooms_required:
     for j in range(i.Rows):
         for k in range(2*i.Columns):
             print(i.Matrix[j][k],end='\t\t')
-        print()
+        print() 
     print()
+
+import csv
+
+for room in rooms_required:
+    filename = f'{room.RoomName}_matrix.csv'
+    
+    with open(filename, 'w', newline='') as csvfile:
+        csv_writer = csv.writer(csvfile, delimiter='\t')
+
+        for row in range(room.Rows):
+            csv_writer.writerow(room.Matrix[row])
+
+    print(f'CSV file created for {room.RoomName}: {filename}')
+
 
 """ counter=0
 for i in range(2*rooms_required[5].Columns):
