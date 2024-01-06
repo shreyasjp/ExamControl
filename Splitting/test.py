@@ -16,22 +16,22 @@ class RoomInfo:
 import mysql.connector as a
 b=a.connect(host='localhost', user='root', passwd='root')
 d=b.cursor(buffered=True)
+subs={}
 
-""" d.execute('select * from test.prn_sub;')
+d.execute('select * from test.prn_sub;')
 e=d.column_names;
 f=list(e)
 f.pop(0)
-print(f)
 
 for i in f:
-    print('\n',i,'\n')
     z='select `'+i+'` from test.prn_sub where `'+i+'` is not null;'
     d.execute(z)
     rows = d.rowcount
-    print(rows,'\n')
     g=d.fetchall()
-    for j in g:
-        print(j[0]) """
+    for j in range(len(g)):
+        subs[g[j][0]]=i
+
+
 
 d.execute('SELECT * FROM test.rooms JOIN test.room_class_specs ON test.rooms.RoomClassID = test.room_class_specs.RoomClassID;')
 rooms=[]
@@ -39,5 +39,18 @@ for i in d.fetchall():
     matrix=[[0] * 2*i[7] for _ in range(i[8])]
     rooms.append(RoomInfo(i[0],i[1],i[5],i[6],0,i[8],i[7],matrix))
 
-print(rooms[0].RoomName)
-print(rooms[5].Matrix)
+counter=0
+for i in range(2*rooms[0].Columns):
+    for j in range(rooms[0].Rows):
+        if(i%2==0):
+            if len(g)<=counter:
+                break
+            rooms[0].Matrix[j][i] = subs[g[counter][0]]
+        else:
+            continue
+        counter+=1
+
+for i in range(rooms[0].Rows):
+    for j in range(2*rooms[0].Columns):
+        print(rooms[0].Matrix[i][j],end='\t')
+    print()
